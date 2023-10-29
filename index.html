@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Weather App</title>
+</head>
+<body>
+   <div class="container">
+    <div class="weather-app-wrapper">
+    <div class="weather-app">
+            <form id="search-from">
+    <div class="row">
+        <div class="col-9">
+            <input 
+            type="search"
+            placeholder="Enter city name.."
+            class="form-control"
+            id="city-input"
+            spellcheck="false"
+            autocomplete="off"/>
+        
+        <div class="col-3">
+            <button type="button" class="btn btn-primary">search</button>
+            
+          </div> </form>
+          <div class="overview">
+            <div class="city">
+            <h1 id="city"></h1>
+          </div>
+            <ul>
+                <li><span id="date"></span> </li>
+                <li id="description"></li>
+            </ul></div>
+            <div class="row">
+                <div class="col-6">
+            <div class="d-flex weather-temperature"></div>
+       
+            <img
+            src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+            alt="clear" id="icon"
+            />
+            <div class="float-left">
+            <strong id="temperature"></strong>
+            <span class="units"> c |<a href="">F</a>
+            </span>
+        </div>
+        </div>
+    </div>
+
+</div>
+        <div class="col-6">
+        <ul>
+            <li>
+                Humidity:<span  id="humidity"></span>
+            </li>
+            <li>
+                Wind: <span id="wind"></span> km/h
+            </li>
+        </ul>
+        </div>
+    </div>
+    
+</div>
+<small id="open-source">
+    <a href="">open-source code</a>, by Ely
+ </small>
+</div>
+   </div> 
+</div>
+   <script src="src/index.js"></script>
+</body>
+</html>
