@@ -23,6 +23,48 @@ function displayDate(timestamp) {
 let now = new Date();
 let date = now.getDate();
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[date.getDay()];
+}
+
+function getForecast(city) {
+  let apiKey = "b2a5adcct04b33178913oc335f405433";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
+  let forecastHtml = "";
+
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml =
+        forecastHtml +
+        `
+      <div class="weather-forecast-day">
+        <div class="weather-forecast-date">${formatDay(day.time)}</div>
+
+        <img src="${day.condition.icon_url}" class="weather-forecast-icon" />
+        <div class="weather-forecast-temperatures">
+          <div class="weather-forecast-temperature">
+            <strong>${Math.round(day.temperature.maximum)}º</strong>
+          </div>
+          <div class="weather-forecast-temperature">${Math.round(
+            day.temperature.minimum
+          )}º</div>
+        </div>
+      </div>
+    `;
+    }
+  });
+
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML = forecastHtml;
+}
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -39,18 +81,7 @@ function displayTemperature(response) {
   dateElement.innerHTML = displayDate(response.data.time * 1000);
   iconElement.setAttribute("src", response.data.condition.icon_url);
   iconElement.setAttribute("alt", response.data.condition.description);
-  document.getElementById("firstIcon").src=response.data.daily[1].condition.icon_url;
-document.getElementById("secondIcon").src=response.data.daily[2].condition.icon_url;
-document.getElementById("thirdIcon").src=response.data.daily[3].condition.icon_url;
-document.getElementById("fourthIcon").src=response.data.daily[4].condition.icon_url;
-document.querySelector("#first-max-temp").innerHTML = `${Math.round(response.data.daily[1].temperature.maximum)}°`;
-document.querySelector("#second-max-temp").innerHTML = `${Math.round(response.data.daily[2].temperature.maximum)}°`;
-document.querySelector("#third-max-temp").innerHTML = `${Math.round(response.data.daily[3].temperature.maximum)}°`;
-document.querySelector("#fourth-max-temp").innerHTML = `${Math.round(response.data.daily[4].temperature.maximum)}°`;
-document.querySelector("#first-min-temp").innerHTML = `${Math.round(response.data.daily[1].temperature.minimum)}°`;
-document.querySelector("#second-min-temp").innerHTML = `${Math.round(response.data.daily[2].temperature.minimum)}°`;
-document.querySelector("#third-min-temp").innerHTML = `${Math.round(response.data.daily[3].temperature.minimum)}°`;
-document.querySelector("#fourth-min-temp").innerHTML = `${Math.round(response.data.daily[4].temperature.minimum)}°`;
+  getForecast(response.data.city)
    
 }
 function search(event) {
@@ -67,4 +98,4 @@ function searchCity(city) {
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", search);
-searchCity("New York");
+searchCity("Tehran");
